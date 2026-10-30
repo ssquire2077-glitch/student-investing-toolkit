@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Student Investing Toolkit</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#1c2433;--mute:#5b6577;--line:#d9e0ec;--acc:#2e5496;--accbg:#e8eefa;--ok:#1f7a45;--okbg:#e3f4ea;--bad:#a63a2b;--badbg:#fbe9e6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151f;--card:#18202e;--ink:#e8edf6;--mute:#9aa6bb;--line:#2a3448;--acc:#8db0ee;--accbg:#1f2c45;--ok:#6fd39a;--okbg:#17301f;--bad:#f09a8c;--badbg:#3a1f1b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10151f;--card:#18202e;--ink:#e8edf6;--mute:#9aa6bb;--line:#2a3448;--acc:#8db0ee;--accbg:#1f2c45;--ok:#6fd39a;--okbg:#17301f;--bad:#f09a8c;--badbg:#3a1f1b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.6rem;margin:.2em 0}h2{font-size:1.15rem;margin:0 0 .6em}p{margin:.4em 0}.mute{color:var(--mute);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+nav button{flex:1 1 auto;padding:10px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:inherit;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--acc)}.opt.ok{background:var(--okbg);border-color:var(--ok)}.opt.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--accbg);font-size:.95rem}
+.bar{height:22px;background:var(--accbg);border-radius:11px;overflow:hidden;margin:8px 0}.bar>div{height:100%;background:var(--acc);transition:width .25s}
+input[type=range]{width:100%}label.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.score{font-weight:700;color:var(--acc)}.why{background:var(--accbg);border-radius:10px;padding:12px 14px;font-size:.9rem}
+.sm{font-size:.8rem;color:var(--mute);margin-top:18px}
+</style>
+</head>
+<body>
+<main>
+<h1>Student Investing Toolkit</h1>
+<p class="mute">A short, practical guide to investing basics, risk and sensible decision-making for UK university students.</p>
+<div class="why"><strong>Why it looks like this.</strong> In a survey of 105 UK students, practical case studies and simulations were the most requested formats, and concentration risk and bond prices were the weakest knowledge areas (fewer than half answered them correctly). The toolkit is built around those findings.</div>
+<nav role="tablist" id="tabs"></nav>
+<section id="view"></section>
+<p class="sm">Educational use only. This toolkit is not financial advice. Investments can fall as well as rise, and you can get back less than you put in. Figures in the simulator are illustrative, not predictions.</p>
+</main>
+<script>
+const Q={
+quiz:[
+{q:"If you put most of your savings into the shares of one company, which risk matters most?",o:["Inflation risk only","Concentration risk","There is no extra risk","Currency risk only"],a:1,e:"Concentration risk: if that single company does badly, a large part of your money is affected. Spreading across many investments reduces this."},
+{q:"Market interest rates rise sharply. What usually happens to the market price of an existing fixed-rate bond?",o:["It falls","It rises","It stays the same","It doubles"],a:0,e:"New bonds now pay more, so older, lower-paying bonds become less attractive and their prices tend to fall."},
+{q:"Your savings earn 3% a year while inflation is 5%. What happens to what your money can buy?",o:["It rises","It stays the same","It falls","Nothing can be said"],a:2,e:"Prices are rising faster than your savings, so your purchasing power falls by roughly 2% a year."},
+{q:"Which best reduces the damage if one investment does badly?",o:["Choosing the highest-return investment","Holding many different investments","Keeping everything in one fund you like","Checking prices daily"],a:1,e:"Diversification means holding a range of investments so one poor result matters less."},
+{q:"Higher expected returns usually come with…",o:["Guaranteed outcomes","No risk","A wider range of possible outcomes","Lower fees"],a:2,e:"Greater potential reward normally means greater uncertainty, including the chance of losses."},
+{q:"A social media post promises “guaranteed 20% a month”. What is the best response?",o:["Invest quickly before it ends","Treat it as a red flag and check independently","Share it with friends","Invest a small amount to test"],a:1,e:"Guaranteed high returns are a classic warning sign of scams. Check who is behind it and whether the firm appears on the FCA Register."}],
+cases:[
+{q:"Case 1: You need £5,000 for tuition in 18 months. You have the money now. What fits best?",o:["Put it all in a single high-growth share","Keep it in a safe, accessible place such as a savings account","Buy crypto for the possible upside"],a:1,e:"With a short time horizon you may not have time to recover from a fall. Money needed soon is usually better kept in lower-risk places."},
+{q:"Case 2: A friend urges you to put your whole loan instalment into a coin they saw on social media. What is the sensible step?",o:["Follow them, they seem confident","Only risk money you can afford to lose, research it, and never use essential funds","Borrow more to invest more"],a:1,e:"Never invest money you need for rent, food or tuition. Confidence from others is not evidence, so do your own checks."},
+{q:"Case 3: You can save £50 a month for 20 years. Which approach suits a beginner?",o:["Pick one share and hope","Use a low-cost, diversified fund and invest regularly","Wait until you can invest a lump sum"],a:1,e:"Regular investing in a diversified, low-cost fund spreads risk and cost over time, and a long horizon gives more room to ride out falls."}],
+check:["I know what I’m investing in and how it makes money.","The money isn’t needed for essentials in the next few years.","I’ve spread my money across more than one investment.","I know the fees and what could go wrong.","I’ve checked the firm is authorised on the FCA Register.","I’m not acting on pressure, hype or a ‘guaranteed’ return."]};
+const tabs=[["quiz","Quiz"],["sim","Diversification"],["cases","Case studies"],["check","Checklist"]];
+const nav=document.getElementById("tabs"),view=document.getElementById("view");
+tabs.forEach(([id,l])=>{const b=document.createElement("button");b.textContent=l;b.setAttribute("role","tab");b.dataset.id=id;b.onclick=()=>show(id);nav.appendChild(b)});
+function show(id){[...nav.children].forEach(b=>b.setAttribute("aria-selected",b.dataset.id===id));history.replaceState(null,"","#"+id);
+ view.innerHTML="";({quiz:()=>quiz("quiz","Test your knowledge"),cases:()=>quiz("cases","Decision case studies"),sim:sim,check:check})[id]()}
+function quiz(key,title){const items=Q[key];let s=0,done=0;const c=el("div","card");c.innerHTML=`<h2>${title}</h2><p class="mute">Score: <span class="score" id="sc">0</span> / ${items.length}</p>`;
+ items.forEach((it,i)=>{const d=el("div");d.style.margin="16px 0";d.innerHTML=`<p><strong>${i+1}. ${it.q}</strong></p>`;
+  it.o.forEach((t,j)=>{const b=el("button","opt");b.textContent=t;b.onclick=()=>{if(d.dataset.d)return;d.dataset.d=1;done++;
+   [...d.querySelectorAll(".opt")].forEach((x,k)=>{x.disabled=true;if(k===it.a)x.classList.add("ok");else if(k===j)x.classList.add("bad")});
+   if(j===it.a){s++;c.querySelector("#sc").textContent=s}const f=el("div","fb");f.textContent=(j===it.a?"Correct. ":"Not quite. ")+it.e;d.appendChild(f)};d.appendChild(b)});c.appendChild(d)});view.appendChild(c)}
+function sim(){const c=el("div","card");c.innerHTML=`<h2>How diversification reduces risk</h2><p>Drag to change how many different investments you hold. This is a stylised model: each holding has 30% yearly volatility and holdings are moderately correlated (0.3).</p>
+<label>Number of holdings: <strong id="n">1</strong><input id="r" type="range" min="1" max="30" value="1"></label>
+<p>Estimated portfolio volatility: <span class="score" id="v"></span></p><div class="bar"><div id="b"></div></div>
+<p class="mute" id="m"></p>`;view.appendChild(c);
+ const r=c.querySelector("#r"),u=()=>{const n=+r.value,v=30*Math.sqrt(1/n+(1-1/n)*0.3);c.querySelector("#n").textContent=n;c.querySelector("#v").textContent=v.toFixed(1)+"%";c.querySelector("#b").style.width=(v/30*100)+"%";
+  c.querySelector("#m").textContent=n===1?"One holding carries the full 30%. All your result depends on one company.":n<10?"Risk drops quickly as you add holdings, but a lot of it is still there.":"Gains from adding more are small. Some risk, the market-wide kind, cannot be diversified away."};r.oninput=u;u()}
+function check(){const c=el("div","card");c.innerHTML=`<h2>Before you invest</h2><p class="mute">Tick each one honestly. <span class="score" id="p">0</span> of ${Q.check.length}</p>`;
+ Q.check.forEach(t=>{const l=el("label","chk");l.innerHTML=`<input type="checkbox"> <span>${t}</span>`;l.firstChild.onchange=()=>c.querySelector("#p").textContent=c.querySelectorAll("input:checked").length;c.appendChild(l)});
+ c.insertAdjacentHTML("beforeend",`<p class="mute" style="margin-top:12px">If you can’t tick every box, pause and find out more first.</p>`);view.appendChild(c)}
+function el(t,c){const e=document.createElement(t);if(c)e.className=c;return e}
+show((location.hash||"#quiz").slice(1).replace(/[^a-z]/g,"")in{quiz:1,sim:1,cases:1,check:1}?location.hash.slice(1):"quiz");
+</script>
+</body>
+</html>
